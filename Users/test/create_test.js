@@ -3,6 +3,11 @@ const User = require('../src/user');
 
 describe('Creating records', () => {
   it('saves a user', () => {
-    assert(1 + 1 === 2)
+
+    // Create Instance of User Model
+    const joe = new User({ name: 'Joe' });
+
+    // Save user
+    joe.save();
   });
 });
