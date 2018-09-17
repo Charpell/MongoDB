@@ -45,7 +45,7 @@ describe('Updating records', () => {
 
   it('A model class can find a record with an Id and update', (done) => {
     assertName(
-      User.findByIdAndUpdate(joe._id, { name: 'Alex' }),
+      User.findByIdAndUpdate(joe._id, { name: 'Alex' }), 
       done
     );
   });
