@@ -12,7 +12,7 @@ module.exports = (criteria, sortProperty, offset = 0, limit = 20) => {
   // Write a query that will follow sort, offset, limit options only
   // do not worry about 'criteria' yet
 
-  const query = Artist.find({})
+  const query = Artist.find(buildQuery(criteria))
     .sort({ [sortProperty]: 1 })
     .skip(offset)
     .limit(limit);
@@ -26,4 +26,29 @@ module.exports = (criteria, sortProperty, offset = 0, limit = 20) => {
         limit: limit
       };
     });
+};
+
+
+const buildQuery = (criteria) => {
+  const query = {};
+
+  if (criteria.name) {
+    query.$text = { $search: criteria.name };
+  }
+
+  if (criteria.age) {
+    query.age = {
+      $gte: criteria.age.min,
+      $lte: criteria.age.max
+    };
+  }
+
+  if (criteria.yearsActive) {
+    query.yearsActive = {
+      $gte: criteria.yearsActive.min,
+      $lte: criteria.yearsActive.max
+    };
+  }
+
+  return query;
 };
