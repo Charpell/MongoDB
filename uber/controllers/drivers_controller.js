@@ -5,35 +5,29 @@ module.exports = {
     res.send({ hi: 'there' })
   },
 
-  create(req, res) { 
+  create(req, res, next) {
     const driverProps = req.body;
 
     Driver.create(driverProps)
       .then(driver => res.send(driver))
-      .catch(error => {
-        res.status(422).send({ error: error.message });
-      })
+      .catch(next)
   },
 
-  edit(req, res) {
+  edit(req, res, next) {
     const driverId = req.params.id;
     const driverProps = req.body;
 
     Driver.findByIdAndUpdate({ _id: driverId }, driverProps)
       .then(() => Driver.findById({ _id: id }))
       .then(driver => res.send(driver))
-      .catch(error => {
-        res.status(422).send({ error: error.message });
-      });
+      .catch(next);
   },
 
-  delete(req, res) {
+  delete(req, res, next) {
     const driverId = req.params.id;
 
     Driver.findByIdAndRemove({ _id: driverId })
       .then(driver => res.status(204).send(driver))
-      .catch(error => {
-        res.status(422).send({ error: error.message });
-      });
+      .catch(next);
   }
 };
